@@ -1,0 +1,68 @@
+" This file is used by haskell-vim-now to allow one to add custom instructions.
+
+" Syntastic should auto-check Haskell
+let g:syntastic_mode_map = { 'mode': 'active'}
+
+set undofile
+set undodir=$HOME/.vim/undo
+nmap ; :
+
+set relativenumber
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
+
+set mouse=
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_warning_symbol = "⚠"
+
+" Make codex tag generation not switch to command prompt
+map <leader>tg :call system("codex update --force")<CR>:call system("git-hscope -X TemplateHaskell")<CR><CR>:call LoadHscope()<CR>
+
+" NERDTree should not close when file is opened
+let NERDTreeQuitOnOpen=0
+" NERDTree should not prevent Vim from exiting
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" The ability to do ghci's :i on a symbol already exists, but by default there is no shortcut for it.
+nmap <silent> <leader>hy :GhcModInfo<CR>
+set cmdheight=2
+
+" Autoload modified files
+set autoread
+
+" Window submode... (http://stackoverflow.com/questions/9047107/navigating-between-vim-windows-in-an-alternative-way)
+call submode#enter_with('WindowsMode', 'n', '', '<Leader>k', ':echo "windows mode"<CR>')
+call submode#leave_with('WindowsMode', 'n', '', '<Leader>')
+
+" Change of windows
+call submode#map('WindowsMode', 'n', '', 'j', '<C-w>j')
+call submode#map('WindowsMode', 'n', '', 'k', '<C-w>k')
+call submode#map('WindowsMode', 'n', '', 'h', '<C-w>h')
+call submode#map('WindowsMode', 'n', '', 'l', '<C-w>l')
+
+" Resize windows
+call submode#map('WindowsMode', 'n', '', '-', '<C-w>-')
+call submode#map('WindowsMode', 'n', '', '+', '<C-w>+')
+call submode#map('WindowsMode', 'n', '', '<', '<C-w><')
+call submode#map('WindowsMode', 'n', '', '>', '<C-w>>')
+
+" Move windows
+call submode#map('WindowsMode', 'n', '', '<C-j>', '<C-w>J')
+call submode#map('WindowsMode', 'n', '', '<C-k>', '<C-w>K')
+call submode#map('WindowsMode', 'n', '', '<C-h>', '<C-w>H')
+call submode#map('WindowsMode', 'n', '', '<C-l>', '<C-w>L')
+
+" close a window with q
+call submode#map('WindowsMode', 'n', '', 'q', '<C-w>c')
+
+" split windows with / and !
+call submode#map('WindowsMode', 'n', '', '/', '<C-w>s')
+call submode#map('WindowsMode', 'n', '', '!', '<C-w>v')
+
+let g:submode_keep_leaving_key = 1
+let g:submode_timeout = 0
