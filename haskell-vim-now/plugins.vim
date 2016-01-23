@@ -1,0 +1,6 @@
+Plug 'rking/ag.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'kshenoy/vim-signature'
+" Plug 'othree/eregex.vim'
+Plug 'Raimondi/delimitMate'
+Plug 'kana/vim-submode'
